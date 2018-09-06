@@ -1,3 +1,3 @@
 # JavaScript30
 
-trying to use git
+##here's the result as I accept the 30 day challenge
