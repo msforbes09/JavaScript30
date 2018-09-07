@@ -122,18 +122,19 @@
 
   <script>
     const panel = document.querySelectorAll('.panel');
-    panel.forEach(item => item.addEventListener('click', animatePanel))
-    panel.forEach(item => item.addEventListener('transitionend', animateContent))
 
     function animatePanel(){
       this.classList.toggle('open');
     }
+      
     function animateContent(e){
       if(e.propertyName.includes('flex')){
         this.classList.toggle('in');
       }
     }
 
+    panel.forEach(item => item.addEventListener('click', animatePanel))
+    panel.forEach(item => item.addEventListener('transitionend', animateContent))
   </script>
 
 
