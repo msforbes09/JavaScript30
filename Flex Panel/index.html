@@ -84,7 +84,8 @@
       font-size:40px;
       flex: 5;
     }
-    .in{
+    .panel.in p:nth-child(1),
+    .panel.in p:nth-child(3){
       transform: translateY(0);
     }
 
@@ -127,9 +128,10 @@
     function animatePanel(){
       this.classList.toggle('open');
     }
-    function animateContent(){
-      const content = this.querySelectorAll('p');
-      content.classList.toggle('in');
+    function animateContent(e){
+      if(e.propertyName.includes('flex')){
+        this.classList.toggle('in');
+      }
     }
 
   </script>
