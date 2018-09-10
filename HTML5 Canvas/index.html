@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>HTML5 Canvas</title>
+</head>
+<body>
+<div id="control">
+	<div>
+		<label for="color">Color :</label>
+		<input type="color" id="color" value="#000000">
+	</div>
+	<div>
+		<label for="weight">Weight :</label>
+		<input type="number" id="weight" min="1" max="100" value="5">		
+	</div>
+	<div id="sample">
+	</div>
+</div>
+<canvas id="draw" width="800" height="800"></canvas>
+<script>
+const draw = document.querySelector('#draw');
+draw.width = window.innerWidth;
+draw.height = window.innerHeight;
+const ctx = draw.getContext('2d');
+ctx.lineJoin = 'round';
+ctx.lineCap = 'round';
+// ctx.globalCompositeOperation = 'multiply';
+const color = document.querySelector('#color');
+const weight = document.querySelector('#weight');
+
+let startX = 0;
+let startY = 0;
+let drawing = false; //flag
+
+
+function startDraw(e){
+	if(!drawing) return;
+
+	ctx.beginPath();
+	ctx.moveTo(startX,startY);
+	ctx.lineTo(e.offsetX,e.offsetY);
+	ctx.stroke();
+
+	[startX, startY] = [e.offsetX, e.offsetY];
+
+	// console.log(e)
+}
+function changeColor(){
+	console.log(this.value);
+	document.documentElement.style.setProperty('--color', this.value);
+}
+function changeWeight(){
+	console.log(this.value);
+	document.documentElement.style.setProperty('--weight', `${this.value}px`);
+}
+
+draw.addEventListener('mousedown', (e) => {
+	drawing = true;
+	ctx.strokeStyle = color.value;
+	ctx.lineWidth = weight.value;	
+	[startX, startY] = [e.offsetX, e.offsetY];
+});
+draw.addEventListener('mousemove', startDraw);
+draw.addEventListener('mouseup', () => drawing = false);
+draw.addEventListener('mouseleave', () => drawing = false);
+color.addEventListener('change', changeColor);
+weight.addEventListener('change', changeWeight);
+</script>
+
+
+<style>
+:root{
+	--color : #000000;
+	--weight : 5px;
+}
+  html, body {
+    margin:0;
+  }
+  #control{
+  	position: absolute;
+  	border: 1px solid gray;
+  	border-radius: 3px;
+  	background-color: white;
+  	margin: 2px 0 0 2px;
+  	display: flex;
+  	flex-direction: column;
+  	justify-content: center;
+  	align-items: stretch;
+  	min-width: 150px;
+  	padding: 2px; 
+  }
+  #control div{
+  	display: flex;
+  	justify-content: space-between;
+  	align-items: center;
+  	margin: 4px;
+  }
+  #sample {
+  	background-color: var(--color);
+  	height: var(--weight);
+  	border: 1px	solid gray;
+  	border-radius: 100px;
+  	margin: 4px; 
+  }
+</style>
+
+</body>
+</html>
