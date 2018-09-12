@@ -26,7 +26,16 @@ fetch(endpoint)
 
 //display matched list 
 function displayData(){
-  console.log(filterList(search.value));
+  const matchData = filterList(search.value);
+  const html = matchData.map(data => {
+    return `
+      <li>
+        <span class-"name">arnnel</span>
+        <span class-"population">arnel</span>
+      </li>
+    `;
+  })
+  console.log(html)
 }
 //filter list
 function filterList(textToMatch){
