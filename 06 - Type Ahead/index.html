@@ -8,7 +8,7 @@
 <body>
 
   <form class="search-form">
-    <input type="text" class="search" placeholder="City or State">
+    <input type="text" class="search" placeholder="City or State" value="asdf">
     <ul class="suggestions">
       <li>Filter for a city</li>
       <li>or a state</li>
@@ -28,14 +28,17 @@ fetch(endpoint)
 function displayData(){
   const matchData = filterList(search.value);
   const html = matchData.map(data => {
+    const regex = new RegExp(search.value, 'gi');
+    const population = parseInt(data.population).toLocaleString();
+    const cityName = data.city.replace(regex, `<span class="hl">${this.value}</span>`);
+    const stateName = data.state.replace(regex, `<span class="hl">${this.value}</span>`);
     return `
       <li>
-        <span class-"name">arnnel</span>
-        <span class-"population">arnel</span>
-      </li>
-    `;
-  })
-  console.log(html)
+        <span class-"name">${cityName}, ${stateName}</span>
+        <span class-"population">${population}</span>
+      </li>`;
+  }).join('');
+  suggestions.innerHTML = html;
 }
 //filter list
 function filterList(textToMatch){
@@ -45,7 +48,8 @@ function filterList(textToMatch){
   })
   return filteredCities;
 }
-search.addEventListener('keyup', displayData)
+search.addEventListener('keyup', displayData);
+search.addEventListener('change', displayData);
 </script>
   </body>
 </html>
